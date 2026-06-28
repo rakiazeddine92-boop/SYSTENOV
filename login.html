@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | SYSTENOV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1f44;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #1e90ff, #00c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .nav-links a:hover { color: #1e90ff; }
+        .auth-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .auth-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        .auth-card h2 { color: #1e90ff; margin-bottom: 1.5rem; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            color: white;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1e90ff;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        button:hover { background: #28a745; }
+        .error-msg { color: #ff6b6b; margin-top: 1rem; }
+        .extra-links { margin-top: 1.5rem; }
+        .extra-links a { color: #1e90ff; text-decoration: none; }
+        footer { text-align: center; padding: 1rem; font-size: 0.75rem; color: #aaa; }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="logo">SYSTENOV</div>
+    <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="pricing.html">Tarifs</a>
+        <a href="login.html">Connexion</a>
+    </div>
+</div>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2>🔐 Connexion</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email professionnel" required>
+            <input type="password" id="password" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+            <div id="errorMsg" class="error-msg"></div>
+        </form>
+        <div class="extra-links">
+            <p>Pas encore de compte ? <a href="signup.html">Créer un compte</a></p>
+        </div>
+    </div>
+</div>
+<footer>© 2026 SYSTENOV — Solutions SaaS & IA</footer>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDljdOGc96R7DRIFylZm65LADefjWCpeNA",
+        authDomain: "systenov-platforme.firebaseapp.com",
+        projectId: "systenov-platforme",
+        storageBucket: "systenov-platforme.firebasestorage.app",
+        messagingSenderId: "357439238725",
+        appId: "1:357439238725:web:5a5b3868072035c086e92c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const form = document.getElementById('loginForm');
+    const errorDiv = document.getElementById('errorMsg');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            window.location.href = "dashboard.html";
+        } catch (err) {
+            errorDiv.innerText = err.code === 'auth/user-not-found' ? '❌ Utilisateur non trouvé.' : '❌ Mot de passe incorrect.';
+        }
+    });
+</script>
+</body>
+</html>

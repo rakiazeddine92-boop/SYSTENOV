@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systenov Dashboard - AI Platform</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  padding: 12px 24px;
+  border-radius: 40px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, #1e90ff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.nav-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+.nav-links a:hover {
+  color: #1e90ff;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #1e90ff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+}
+
+h2 {
+  margin-bottom: 16px;
+  font-size: 1.3rem;
+  color: #1e90ff;
+}
+
+input, button {
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+input {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  width: calc(100% - 20px);
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+button {
+  background: #1e90ff;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #28a745;
+  transform: scale(1.02);
+}
+
+hr {
+  margin: 20px 0;
+  border-color: rgba(255,255,255,0.1);
+}
+
+#planText {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 10px;
+  background: rgba(30,144,255,0.2);
+  border-radius: 8px;
+  text-align: center;
+}
+
+#result {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  white-space: pre-wrap;
+  min-height: 80px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.logout-btn {
+  background: #dc3545;
+}
+
+.logout-btn:hover {
+  background: #c82333;
+}
+
+.pro-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffd700, #ffb347);
+  color: #000;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.free-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.usage-bar {
+  margin-top: 10px;
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.usage-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1e90ff, #00c6ff);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.thinking {
+  animation: pulse 1s infinite;
+}
+
+/* ===== MESSAGE D'ACCUEIL ===== */
+.welcome-msg {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: rgba(30,144,255,0.15);
+  border-radius: 12px;
+  border-left: 4px solid #1e90ff;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+  .button-group {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <!-- شريط التنقل الموحد -->
+  <div class="navbar">
+    <div class="logo">SYSTENOV</div>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="pricing.html">Tarifs</a>
+      <a href="login.html" id="navLoginLink">Connexion</a>
+    </div>
+  </div>
+
+  <h1>🚀 Tableau de bord Systenov</h1>
+
+  <!-- رسالة ترحيب -->
+  <div id="welcomeMsg" class="welcome-msg" style="display:none;">
+    👋 Bonjour, <span id="userEmailDisplay"></span> !
+  </div>
+
+  <!-- 🔐 Authentification -->
+  <div class="card" id="authCard">
+    <h2>🔐 Authentification</h2>
+    <input id="email" placeholder="Email professionnel" type="email">
+    <input id="password" placeholder="Mot de passe" type="password">
+    <div class="button-group" id="authButtons">
+      <button onclick="register()" id="registerBtn">Créer un compte</button>
+      <button onclick="login()" id="loginBtn">Se connecter</button>
+      <button onclick="logout()" class="logout-btn" id="logoutBtn" style="display:none;">Déconnexion</button>
+    </div>
+  </div>
+
+  <!-- 📊 Forfait -->
+  <div class="card">
+    <h2>💎 Votre forfait <span id="planBadge" class="free-badge">GRATUIT</span></h2>
+    <p id="planText">🔓 Non connecté</p>
+    <div class="usage-bar" id="usageBar">
+      <div class="usage-fill" id="usageFill" style="width: 0%"></div>
+    </div>
+    <button onclick="upgrade()" id="upgradeBtn">Passer à Pro 💳</button>
+  </div>
+
+  <!-- 🤖 IA Générative (OpenRouter) -->
+  <div class="card">
+    <h2>🤖 Générateur IA (OpenRouter)</h2>
+    <input id="msg" placeholder="Posez votre question... ex: Rédige un e-mail commercial, Explique l'IA, Crée un plan marketing">
+    <button onclick="sendAI()">Générer ✨</button>
+    <div id="result">
+      💡 La réponse de l'IA apparaîtra ici...
+    </div>
+    <small id="usageCounter" style="color: #888; display: block; margin-top: 10px;"></small>
+  </div>
+</div>
+
+<script type="module">
+
+/* ================= FIREBASE ================= */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* 🔥 Configuration Firebase (projet SYSTENOV) */
+const firebaseConfig = {
+  apiKey: "AIzaSyDljdOGc96R7DRIFylZm65LADefjWCpeNA",
+  authDomain: "systenov-platforme.firebaseapp.com",
+  projectId: "systenov-platforme",
+  storageBucket: "systenov-platforme.firebasestorage.app",
+  messagingSenderId: "357439238725",
+  appId: "1:357439238725:web:5a5b3868072035c086e92c"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* ================= GLOBAL STATE ================= */
+let currentUser = null;
+let userData = null;
+
+/* ================= OPENROUTER AI ================= */
+// 🔑 ضع مفتاحك من OpenRouter هنا: https://openrouter.ai/keys
+const OPENROUTER_API_KEY = "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"; // استبدل بمفتاحك
+
+async function callAI(prompt) {
+  if (!OPENROUTER_API_KEY || OPENROUTER_API_KEY === "sk-or-v1-VOTRE_CLE_ICI") {
+    console.warn("Aucune clé OpenRouter. Utilisation du mode démo.");
+    return { success: false, error: "Clé API manquante. Veuillez configurer OpenRouter." };
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "HTTP-Referer": "https://systenov.pages.dev",
+        "X-Title": "Systenov"
+      },
+      body: JSON.stringify({
+        model: "deepseek/deepseek-v4-flash", // يمكنك تغيير النموذج حسب رغبتك
+        messages: [
+          { role: "system", content: "أنت مساعد ذكي ومفيد. أجب باللغة العربية أو الفرنسية حسب سؤال المستخدم." },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 500,
+        stream: false
+      })
+    });
+
+    clearTimeout(timeout);
+    const data = await response.json();
+    console.log("📥 Réponse OpenRouter:", data);
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: data?.error?.message || `Erreur ${response.status}`
+      };
+    }
+
+    const text = data?.choices?.[0]?.message?.content;
+    if (!text) {
+      return { success: false, error: "Réponse vide" };
+    }
+
+    return { success: true, text };
+  } catch (err) {
+    return {
+      success: false,
+      error: err.name === "AbortError" ? "Temps d'attente dépassé" : err.message
+    };
+  }
+}
+
+/* ================= SIMULATION (FALLBACK) ================= */
+function simulateAIResponse(prompt) {
+  const p = prompt.toLowerCase();
+  if (p.includes("bonjour") || p.includes("hello") || p.includes("مرحبا")) {
+    return "👋 Bonjour ! Je suis l'assistant IA de Systenov. Comment puis-je vous aider à automatiser vos processus ?";
+  }
+  if (p.includes("prix") || p.includes("tarif") || p.includes("سعر")) {
+    return "💰 Forfait Pro : accès illimité à l'IA, dashboards avancés et support prioritaire. Essayez la démo gratuite !";
+  }
+  if (p.includes("automatisation") || p.includes("أتمتة")) {
+    return "🤖 L'automatisation intelligente permet de réduire les erreurs, gagner du temps et augmenter la productivité. Systenov vous accompagne.";
+  }
+  if (p.includes("poème") || p.includes("شعر")) {
+    return "📝 Voici un poème :\nDans le code et les données,\nL'IA s'éveille, éclairée.\nAvec Systenov, l'avenir est tracé,\nL'automatisation est lancée ✨";
+  }
+  return `🤔 Je comprends que vous demandez : "${prompt.substring(0, 50)}...". En tant qu'IA Systenov, je peux vous conseiller sur l'automatisation, l'IA, et les solutions SaaS. Passez à Pro pour des réponses prioritaires !`;
+}
+
+/* ================= MISE À JOUR DE L'INTERFACE ================= */
+async function updateUI() {
+  const planText = document.getElementById("planText");
+  const usageCounter = document.getElementById("usageCounter");
+  const planBadge = document.getElementById("planBadge");
+  const upgradeBtn = document.getElementById("upgradeBtn");
+  const usageFill = document.getElementById("usageFill");
+  const welcomeMsg = document.getElementById("welcomeMsg");
+  const userEmailDisplay = document.getElementById("userEmailDisplay");
+  const authCard = document.getElementById("authCard");
+  const registerBtn = document.getElementById("registerBtn");
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const navLoginLink = document.getElementById("navLoginLink");
+
+  if (!currentUser) {
+    planText.innerHTML = "🔓 Non connecté";
+    usageCounter.innerHTML = "";
+    planBadge.innerHTML = "GRATUIT";
+    planBadge.className = "free-badge";
+    upgradeBtn.innerHTML = "Passer à Pro 💳";
+    upgradeBtn.disabled = false;
+    usageFill.style.width = "0%";
+    welcomeMsg.style.display = "none";
+    authCard.style.display = "block";
+    registerBtn.style.display = "inline-block";
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+    navLoginLink.textContent = "Connexion";
+    navLoginLink.href = "login.html";
+    navLoginLink.onclick = null;
+    return;
+  }
+
+  const ref = doc(db, "users", currentUser.uid);
+  const snap = await getDoc(ref);
+  userData = snap.data();
+
+  if (!userData) {
+    userData = { plan: "free", usage: 0, createdAt: new Date().toISOString(), email: currentUser.email };
+    await setDoc(ref, userData);
+  }
+
+  const isPro = userData?.plan === "pro";
+  const usage = userData?.usage || 0;
+  const maxFree = 10;
+  const remaining = isPro ? "∞" : (maxFree - usage);
+  const percentUsed = isPro ? 100 : Math.min((usage / maxFree) * 100, 100);
+  
+  if (isPro) {
+    planText.innerHTML = "💎 Forfait PRO - Accès illimité à l'IA 🚀";
+    planBadge.innerHTML = "PRO ⭐";
+    planBadge.className = "pro-badge";
+    usageCounter.innerHTML = "🎉 Requêtes IA illimitées !";
+    usageFill.style.background = "linear-gradient(90deg, #ffd700, #ffb347)";
+    upgradeBtn.innerHTML = "🎖️ Pro actif";
+    upgradeBtn.disabled = true;
+  } else {
+    planText.innerHTML = `⚠️ Forfait GRATUIT - ${remaining} requêtes IA restantes`;
+    planBadge.innerHTML = "GRATUIT";
+    planBadge.className = "free-badge";
+    usageCounter.innerHTML = `📊 Utilisation : ${usage}/${maxFree} • ${remaining} restantes`;
+    usageFill.style.background = "linear-gradient(90deg, #1e90ff, #00c6ff)";
+    upgradeBtn.innerHTML = "Passer à Pro 💳";
+    upgradeBtn.disabled = false;
+  }
+  usageFill.style.width = `${percentUsed}%`;
+
+  welcomeMsg.style.display = "block";
+  userEmailDisplay.textContent = currentUser.email;
+
+  authCard.style.display = "none";
+
+  navLoginLink.textContent = "Déconnexion";
+  navLoginLink.href = "#";
+  navLoginLink.onclick = (e) => {
+    e.preventDefault();
+    logout();
+  };
+}
+
+/* ================= INSCRIPTION ================= */
+window.register = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  if (!email || !password) return alert("Veuillez remplir tous les champs");
+  if (password.length < 6) return alert("Mot de passe : au moins 6 caractères");
+  try {
+    const userCred = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, "users", userCred.user.uid), {
+      plan: "free", usage: 0, createdAt: new Date().toISOString(), email: email
+    });
+    alert("✅ Compte créé ! 10 requêtes IA gratuites.");
+  } catch (err) {
+    alert(err.code === 'auth/email-already-in-use' ? "❌ Email déjà utilisé." : "❌ Erreur : " + err.message);
+  }
+};
+
+/* ================= CONNEXION ================= */
+window.login = async () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  if (!email || !password) return alert("Email et mot de passe requis");
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("✅ Connecté !");
+  } catch (err) {
+    alert(err.code === 'auth/user-not-found' ? "❌ Utilisateur inexistant. Inscrivez-vous." : "❌ Erreur : " + err.message);
+  }
+};
+
+/* ================= DÉCONNEXION ================= */
+window.logout = async () => {
+  await signOut(auth);
+  currentUser = null;
+  userData = null;
+  document.getElementById("result").innerHTML = "💡 La réponse de l'IA apparaîtra ici...";
+  await updateUI();
+  alert("Déconnecté");
+};
+
+/* ================= ÉTAT UTILISATEUR ================= */
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  await updateUI();
+});
+
+/* ================= PASSER À PRO (DÉMO) ================= */
+window.upgrade = async () => {
+  if (!currentUser) return alert("Connectez-vous d'abord");
+  if (userData?.plan === "pro") return alert("Vous êtes déjà Pro !");
+  
+  if (confirm("🔓 MODE DÉMO\nPasser à Pro gratuitement pour tester ?\n(En production, ce sera Stripe)")) {
+    try {
+      const ref = doc(db, "users", currentUser.uid);
+      await updateDoc(ref, { plan: "pro", usage: 0, upgradedAt: new Date().toISOString() });
+      await updateUI();
+      alert("🎉 Félicitations ! Vous êtes maintenant PRO (démo). IA illimitée !");
+    } catch (err) {
+      alert("Erreur : " + err.message);
+    }
+  }
+};
+
+/* ================= GÉNÉRATEUR IA ================= */
+window.sendAI = async () => {
+  if (!currentUser) return alert("Veuillez vous connecter");
+  const msg = document.getElementById("msg").value.trim();
+  if (!msg) return alert("Écrivez quelque chose");
+  
+  const isPro = userData?.plan === "pro";
+  const currentUsage = userData?.usage || 0;
+  const maxFree = 10;
+  
+  if (!isPro && currentUsage >= maxFree) {
+    alert(`⚠️ Limite gratuite atteinte (${maxFree}/${maxFree}). Passez à Pro pour continuer.`);
+    return;
+  }
+
+  const resultDiv = document.getElementById("result");
+  const btn = document.querySelector("button[onclick='sendAI()']");
+  const originalText = btn.innerHTML;
+  resultDiv.innerHTML = "🤔 Réflexion en cours avec OpenRouter AI...";
+  resultDiv.classList.add("thinking");
+  btn.innerHTML = "⏳ Génération...";
+  btn.disabled = true;
+
+  try {
+    const response = await callAI(msg);
+    
+    if (!response.success) {
+      resultDiv.innerHTML = `❌ Erreur: ${response.error}`;
+      resultDiv.classList.remove("thinking");
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+      return;
+    }
+
+    resultDiv.innerHTML = `✨ ${response.text}`;
+    resultDiv.classList.remove("thinking");
+    
+    if (!isPro) {
+      const newUsage = currentUsage + 1;
+      const ref = doc(db, "users", currentUser.uid);
+      await updateDoc(ref, { usage: newUsage });
+      userData.usage = newUsage;
+      await updateUI();
+      const remaining = maxFree - newUsage;
+      if (remaining <= 3 && remaining > 0) {
+        resultDiv.innerHTML += `\n\n⚠️ **Plus que ${remaining} requêtes gratuites.** Passez à Pro pour l'illimité.`;
+      } else if (remaining === 0) {
+        resultDiv.innerHTML += `\n\n🔴 **Vous avez épuisé vos requêtes gratuites.** Passez à Pro !`;
+      }
+    }
+  } catch (err) {
+    resultDiv.innerHTML = "❌ Une erreur est survenue. Réessayez.";
+    resultDiv.classList.remove("thinking");
+  } finally {
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+    document.getElementById("msg").value = "";
+  }
+};
+
+// Initialisation
+updateUI();
+console.log("✅ Dashboard Systenov chargé - OpenRouter AI intégré");
+</script>
+</body>
+</html>

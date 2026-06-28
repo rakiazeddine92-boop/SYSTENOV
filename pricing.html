@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Tarifs | SYSTENOV - SaaS IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1f44;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar (identique aux autres pages) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #1e90ff, #00c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .nav-links a:hover {
+            color: #1e90ff;
+        }
+        .nav-links .active {
+            color: #1e90ff;
+            font-weight: 600;
+        }
+
+        /* Conteneur principal */
+        .pricing-container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #1e90ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subhead {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 3rem;
+        }
+
+        /* Cartes de prix */
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .pricing-card {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 32px;
+            padding: 2rem 1.5rem;
+            width: 320px;
+            transition: transform 0.3s, border-color 0.3s;
+            text-align: center;
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(30,144,255,0.5);
+        }
+        .popular {
+            border: 1px solid #1e90ff;
+            box-shadow: 0 0 20px rgba(30,144,255,0.2);
+            position: relative;
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #1e90ff;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+        .plan-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+            color: #1e90ff;
+        }
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #ccc;
+        }
+        .features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        .features li {
+            margin: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .features i {
+            color: #28a745;
+            width: 20px;
+        }
+        .btn-upgrade {
+            background: #1e90ff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .btn-upgrade:hover {
+            background: #28a745;
+            transform: scale(1.02);
+        }
+        .btn-disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .current-badge {
+            background: #28a745;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+        }
+        .user-info {
+            background: rgba(255,255,255,0.05);
+            border-radius: 60px;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.75rem;
+            color: #aaa;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        @media (max-width: 700px) {
+            .pricing-card {
+                width: 100%;
+                max-width: 360px;
+            }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">SYSTENOV</div>
+    <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="pricing.html" class="active">Tarifs</a>
+        <a href="login.html">Connexion</a>
+    </div>
+</div>
+
+<div class="pricing-container">
+    <h1>Choisissez votre formule</h1>
+    <div class="subhead">Des solutions adaptées à tous les besoins, de la startup à l'entreprise.</div>
+
+    <!-- Affichage utilisateur connecté -->
+    <div id="userStatus" style="text-align: center; margin-bottom: 1rem;"></div>
+
+    <div class="pricing-grid">
+        <!-- Plan Free -->
+        <div class="pricing-card">
+            <div class="plan-name">Gratuit</div>
+            <div class="price">0<span> DH / mois</span></div>
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> 10 requêtes IA / mois</li>
+                <li><i class="fas fa-check-circle"></i> Dashboard basique</li>
+                <li><i class="fas fa-check-circle"></i> Support communautaire</li>
+                <li><i class="fas fa-times-circle" style="color:#ff6b6b;"></i> Accès API</li>
+                <li><i class="fas fa-times-circle" style="color:#ff6b6b;"></i> Analyses avancées</li>
+            </ul>
+            <button class="btn-upgrade" id="freeBtn" disabled>Plan actuel</button>
+        </div>
+
+        <!-- Plan Pro -->
+        <div class="pricing-card popular">
+            <div class="popular-badge">⭐ Populaire</div>
+            <div class="plan-name">Pro</div>
+            <div class="price">9<span> USD / mois</span></div>
+            <ul class="features">
+                <li><i class="fas fa-check-circle"></i> Requêtes IA illimitées</li>
+                <li><i class="fas fa-check-circle"></i> Dashboard complet + analyses</li>
+                <li><i class="fas fa-check-circle"></i> Support prioritaire 24/7</li>
+                <li><i class="fas fa-check-circle"></i> Accès API complet</li>
+                <li><i class="fas fa-check-circle"></i> Intégrations personnalisées</li>
+            </ul>
+            <button class="btn-upgrade" id="proBtn">Passer à Pro 💳</button>
+            <div id="proMsg" style="font-size:0.7rem; margin-top:8px;"></div>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 2rem; font-size:0.8rem; color:#aaa;">
+        💡 Mode démo : la bascule vers Pro est gratuite pour tester. En production, Stripe sera intégré.
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 SYSTENOV — Solutions SaaS & IA. Tous droits réservés.</p>
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // Configuration Firebase (identique au projet)
+    const firebaseConfig = {
+        apiKey: "AIzaSyDljdOGc96R7DRIFylZm65LADefjWCpeNA",
+        authDomain: "systenov-platforme.firebaseapp.com",
+        projectId: "systenov-platforme",
+        storageBucket: "systenov-platforme.firebasestorage.app",
+        messagingSenderId: "357439238725",
+        appId: "1:357439238725:web:5a5b3868072035c086e92c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUser = null;
+    let userPlan = "free"; // free ou pro
+
+    const proBtn = document.getElementById('proBtn');
+    const freeBtn = document.getElementById('freeBtn');
+    const userStatusDiv = document.getElementById('userStatus');
+    const proMsgSpan = document.getElementById('proMsg');
+
+    // Mise à jour de l'interface selon le plan et la connexion
+    async function updatePricingUI(user) {
+        if (!user) {
+            // Utilisateur non connecté
+            userStatusDiv.innerHTML = `<div class="user-info">🔓 Vous n'êtes pas connecté. <a href="login.html" style="color:#1e90ff;">Connectez-vous</a> pour souscrire.</div>`;
+            proBtn.innerText = "Se connecter pour upgrade";
+            proBtn.disabled = false;
+            proBtn.classList.remove('btn-disabled');
+            freeBtn.innerText = "Gratuit";
+            freeBtn.disabled = true;
+            return;
+        }
+
+        // Récupérer le plan depuis Firestore
+        const userRef = db.collection("users").doc(user.uid);
+        const docSnap = await userRef.get();
+        if (docSnap.exists) {
+            userPlan = docSnap.data().plan || "free";
+        } else {
+            userPlan = "free";
+            // Créer document par défaut
+            await userRef.set({ plan: "free", usage: 0, email: user.email, createdAt: new Date().toISOString() });
+        }
+
+        const isPro = (userPlan === "pro");
+        userStatusDiv.innerHTML = `<div class="user-info">👋 Bonjour <strong>${user.email}</strong> — Plan actuel : ${isPro ? '⭐ PRO (illimité)' : '🔓 GRATUIT (10 req/mois)'}</div>`;
+
+        if (isPro) {
+            proBtn.innerText = "✅ Déjà Pro";
+            proBtn.disabled = true;
+            proBtn.classList.add('btn-disabled');
+            freeBtn.innerText = "Gratuit (actif)";
+            freeBtn.disabled = true;
+            proMsgSpan.innerText = "Merci d'être membre Pro !";
+        } else {
+            proBtn.innerText = "Passer à Pro 💳";
+            proBtn.disabled = false;
+            proBtn.classList.remove('btn-disabled');
+            freeBtn.innerText = "Plan actuel (Gratuit)";
+            freeBtn.disabled = true;
+            proMsgSpan.innerHTML = "";
+        }
+    }
+
+    // Fonction de mise à niveau (démo)
+    async function upgradeToPro() {
+        if (!currentUser) {
+            alert("Veuillez vous connecter d'abord.");
+            window.location.href = "login.html";
+            return;
+        }
+        // Vérifier si déjà pro
+        const userRef = db.collection("users").doc(currentUser.uid);
+        const docSnap = await userRef.get();
+        const plan = docSnap.exists ? docSnap.data().plan : "free";
+        if (plan === "pro") {
+            alert("Vous êtes déjà un utilisateur Pro !");
+            return;
+        }
+
+        const confirmDemo = confirm("🔓 MODE DÉMO\nSystenov vous permet de tester gratuitement la version Pro.\nCliquez sur OK pour activer l'accès illimité (démo).\n\nEn production, le paiement Stripe sera requis.");
+        if (confirmDemo) {
+            try {
+                await userRef.update({
+                    plan: "pro",
+                    upgradedAt: new Date().toISOString(),
+                    usage: 0
+                });
+                alert("🎉 Félicitations ! Vous êtes maintenant en formule PRO (démo). Profitez des fonctionnalités illimitées !");
+                // Rafraîchir l'interface
+                await updatePricingUI(currentUser);
+                // Option: rediriger vers dashboard pour voir le changement
+                if (confirm("Voulez-vous aller au tableau de bord maintenant ?")) {
+                    window.location.href = "dashboard.html";
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de la mise à niveau : " + err.message);
+            }
+        }
+    }
+
+    // Écouter l'état de connexion
+    auth.onAuthStateChanged(async (user) => {
+        currentUser = user;
+        await updatePricingUI(user);
+    });
+
+    // Ajouter l'événement au bouton Pro
+    proBtn.addEventListener('click', upgradeToPro);
+</script>
+</body>
+</html>
