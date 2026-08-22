@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Produits numériques - SYSTENOV</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-hero { text-align: center; padding: 50px 20px 60px; }
+    .page-hero h1 { font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, #f1f5f9, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .page-hero p { font-size: 1.1rem; color: #94a3b8; max-width: 650px; margin: 12px auto 0; line-height: 1.7; }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .product-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(167,139,250,0.3);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+    .product-card .icon { font-size: 2.8rem; margin-bottom: 12px; display: block; }
+    .product-card .icon.purple { color: #a78bfa; }
+    .product-card .icon.green { color: #34d399; }
+    .product-card .icon.blue { color: #60a5fa; }
+    .product-card .icon.yellow { color: #fbbf24; }
+    .product-card .icon.pink { color: #f472b6; }
+    .product-card .icon.orange { color: #fb923c; }
+    .product-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; color: #f1f5f9; }
+    .product-card .desc { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; flex: 1; }
+    .product-card .price { font-size: 1.8rem; font-weight: 700; color: #a78bfa; margin: 12px 0; }
+    .product-card .price span { font-size: 1rem; font-weight: 400; color: #94a3b8; }
+    .product-card .tags { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+    .product-card .tags span { background: rgba(167,139,250,0.1); color: #a78bfa; font-size: 0.65rem; padding: 4px 12px; border-radius: 40px; font-weight: 600; text-transform: uppercase; }
+    .btn-buy-paypal { background: #0070ba; color: white; padding: 12px 24px; border-radius: 40px; font-weight: 600; border: none; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; width: 100%; margin-top: 4px; }
+    .btn-buy-paypal:hover { background: #003087; transform: scale(1.02); }
+    .btn-buy-whatsapp { background: #25D366; color: white; padding: 12px 24px; border-radius: 40px; font-weight: 600; border: none; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block; width: 100%; margin-top: 6px; }
+    .btn-buy-whatsapp:hover { transform: scale(1.02); filter: brightness(1.05); }
+    .btn-group { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+    @media (max-width: 600px) { .page-hero h1 { font-size: 2rem; } .products-grid { grid-template-columns: 1fr; padding: 12px; } }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <a href="index.html" class="logo-link">
+    <img src="logo.png" alt="SYSTENOV" class="logo-img">
+    <span class="logo-text">SYSTENOV</span>
+  </a>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="products.html" style="color:#a78bfa; font-weight:600;">Produits</a>
+    <a href="services.html">Services</a>
+    <a href="affiliate-tools.html">Outils recommandés</a>
+    <a href="pricing.html">Tarifs</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html" class="btn-nav">Connexion</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="page-hero">
+  <h1>🛍️ Produits numériques</h1>
+  <p>Des ressources prêtes à l'emploi pour booster votre business : templates, SaaS, formations et outils.</p>
+</section>
+
+<!-- ===== PRODUCTS ===== -->
+<div class="products-grid">
+
+  <div class="product-card">
+    <span class="icon purple"><i class="fas fa-book"></i></span>
+    <h3>E-book : Marketing Digital</h3>
+    <div class="tags"><span>E-book</span><span>PDF</span></div>
+    <p class="desc">Guide complet de 50 pages pour lancer votre stratégie marketing digitale en 30 jours.</p>
+    <div class="price">$19 <span>USD</span></div>
+    <div class="btn-group">
+      <a href="https://www.paypal.com/paypalme/VOTRE_PAYPAL/19" target="_blank" class="btn-buy-paypal"><i class="fab fa-paypal"></i> Acheter</a>
+      <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20acheter%20l%27ebook%20Marketing%20Digital." target="_blank" class="btn-buy-whatsapp"><i class="fab fa-whatsapp"></i> Contacter</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <span class="icon green"><i class="fas fa-file-excel"></i></span>
+    <h3>Template Excel Business Plan</h3>
+    <div class="tags"><span>Excel</span><span>Template</span></div>
+    <p class="desc">Fichier Excel prêt à l'emploi pour créer votre business plan et prévisions financières.</p>
+    <div class="price">$29 <span>USD</span></div>
+    <div class="btn-group">
+      <a href="https://www.paypal.com/paypalme/VOTRE_PAYPAL/29" target="_blank" class="btn-buy-paypal"><i class="fab fa-paypal"></i> Acheter</a>
+      <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20acheter%20le%20template%20Excel." target="_blank" class="btn-buy-whatsapp"><i class="fab fa-whatsapp"></i> Contacter</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <span class="icon blue"><i class="fas fa-wordpress"></i></span>
+    <h3>Thème WordPress Pro</h3>
+    <div class="tags"><span>WordPress</span><span>Thème</span></div>
+    <p class="desc">Thème WordPress professionnel, responsive, optimisé SEO.</p>
+    <div class="price">$39 <span>USD</span></div>
+    <div class="btn-group">
+      <a href="https://www.paypal.com/paypalme/VOTRE_PAYPAL/39" target="_blank" class="btn-buy-paypal"><i class="fab fa-paypal"></i> Acheter</a>
+      <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20acheter%20le%20th%C3%A8me%20WordPress." target="_blank" class="btn-buy-whatsapp"><i class="fab fa-whatsapp"></i> Contacter</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <span class="icon yellow"><i class="fas fa-video"></i></span>
+    <h3>Formation : IA pour les nuls</h3>
+    <div class="tags"><span>Formation</span><span>Vidéo</span></div>
+    <p class="desc">Formation vidéo complète (5 heures) pour comprendre l'IA et l'utiliser dans votre business.</p>
+    <div class="price">$49 <span>USD</span></div>
+    <div class="btn-group">
+      <a href="https://www.paypal.com/paypalme/VOTRE_PAYPAL/49" target="_blank" class="btn-buy-paypal"><i class="fab fa-paypal"></i> Acheter</a>
+      <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20acheter%20la%20formation%20IA." target="_blank" class="btn-buy-whatsapp"><i class="fab fa-whatsapp"></i> Contacter</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <span class="icon pink"><i class="fas fa-code"></i></span>
+    <h3>Scripts Web Scraping (Python)</h3>
+    <div class="tags"><span>Python</span><span>Code</span></div>
+    <p class="desc">Scripts prêts à l'emploi pour extraire des données de sites web avec BeautifulSoup.</p>
+    <div class="price">$24 <span>USD</span></div>
+    <div class="btn-group">
+      <a href="https://www.paypal.com/paypalme/VOTRE_PAYPAL/24" target="_blank" class="btn-buy-paypal"><i class="fab fa-paypal"></i> Acheter</a>
+      <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20acheter%20les%20scripts%20Python." target="_blank" class="btn-buy-whatsapp"><i class="fab fa-whatsapp"></i> Contacter</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <span class="icon orange"><i class="fas fa-palette"></i></span>
+    <h3>Pack de 100 Templates Canva</h3>
+    <div class="tags"><span>Canva</span><span>Templates</span></div>
+    <p class="desc">100 modèles Canva pour vos réseaux sociaux : posts Instagram, Stories, LinkedIn, Facebook.</p>
+    <div class="price">$15 <span>USD</span></div>
+    <div class="btn-group">
+      <a href="https://www.paypal.com/paypalme/VOTRE_PAYPAL/15" target="_blank" class="btn-buy-paypal"><i class="fab fa-paypal"></i> Acheter</a>
+      <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20acheter%20le%20pack%20Canva." target="_blank" class="btn-buy-whatsapp"><i class="fab fa-whatsapp"></i> Contacter</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2026 SYSTENOV – Tous droits réservés</p>
+  <div style="margin-top:8px; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    <a href="privacy.html">Politique de confidentialité</a>
+    <a href="terms.html">Conditions d'utilisation</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://wa.me/212665998835" target="_blank" style="color:#25D366;">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

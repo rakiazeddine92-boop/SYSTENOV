@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solutions - SYSTENOV</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-hero { text-align: center; padding: 50px 20px 60px; }
+    .page-hero h1 { font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, #f1f5f9, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .page-hero p { font-size: 1.1rem; color: #94a3b8; max-width: 650px; margin: 12px auto 0; line-height: 1.7; }
+    .solutions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .solution-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 28px 24px; transition: 0.3s; }
+    .solution-card:hover { transform: translateY(-6px); border-color: rgba(96,165,250,0.3); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
+    .solution-card .icon { font-size: 2.8rem; margin-bottom: 12px; display: block; }
+    .solution-card .icon.industrial { color: #f87171; }
+    .solution-card .icon.ai { color: #60a5fa; }
+    .solution-card .icon.crm { color: #34d399; }
+    .solution-card .icon.data { color: #fbbf24; }
+    .solution-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; color: #f1f5f9; }
+    .solution-card p { font-size: 0.95rem; color: #94a3b8; line-height: 1.6; }
+    .solution-card .tag { display: inline-block; margin-top: 10px; background: rgba(96,165,250,0.08); color: #60a5fa; font-size: 0.65rem; padding: 2px 12px; border-radius: 40px; font-weight: 600; text-transform: uppercase; }
+    @media (max-width: 600px) { .page-hero h1 { font-size: 2rem; } .solutions-grid { grid-template-columns: 1fr; padding: 12px; } }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <a href="index.html" class="logo-link">
+    <img src="logo.png" alt="SYSTENOV" class="logo-img">
+    <span class="logo-text">SYSTENOV</span>
+  </a>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="solutions.html" style="color:#60a5fa; font-weight:600;">Solutions</a>
+    <a href="products.html">Produits</a>
+    <a href="services.html">Services</a>
+    <a href="affiliate-tools.html">Outils recommandés</a>
+    <a href="pricing.html">Tarifs</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html" class="btn-nav">Connexion</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="page-hero">
+  <h1>🔧 Solutions pour entreprises</h1>
+  <p>Des solutions adaptées à vos besoins : optimisation industrielle, automatisation, CRM et analyse de données.</p>
+</section>
+
+<!-- ===== SOLUTIONS ===== -->
+<div class="solutions-grid">
+  <div class="solution-card">
+    <span class="icon industrial"><i class="fas fa-industry"></i></span>
+    <h3>Optimisation industrielle</h3>
+    <p>Analyse de performance, KPI, productivité, coûts, stocks, maintenance et amélioration continue.</p>
+    <span class="tag">Expertise</span>
+  </div>
+  <div class="solution-card">
+    <span class="icon ai"><i class="fas fa-robot"></i></span>
+    <h3>Automatisation &amp; IA</h3>
+    <p>Automatisation des tâches répétitives, workflows, rapports automatiques et intégration IA.</p>
+    <span class="tag">AI</span>
+  </div>
+  <div class="solution-card">
+    <span class="icon crm"><i class="fas fa-users"></i></span>
+    <h3>CRM &amp; Gestion</h3>
+    <p>Gestion des clients, prospects, leads, relances, historique et suivi commercial.</p>
+    <span class="tag">CRM</span>
+  </div>
+  <div class="solution-card">
+    <span class="icon data"><i class="fas fa-chart-pie"></i></span>
+    <h3>Data &amp; Reporting</h3>
+    <p>Dashboards, visualisation, rapports, indicateurs et décisions basées sur les données.</p>
+    <span class="tag">Data</span>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2026 SYSTENOV – Tous droits réservés</p>
+  <div style="margin-top:8px; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    <a href="privacy.html">Politique de confidentialité</a>
+    <a href="terms.html">Conditions d'utilisation</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://wa.me/212665998835" target="_blank" style="color:#25D366;">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Outils Business - SYSTENOV</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .service-hero {
+      text-align: center;
+      padding: 50px 20px 60px;
+    }
+    .service-hero .icon-big {
+      font-size: 4rem;
+      color: #fbbf24;
+      margin-bottom: 16px;
+    }
+    .service-hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f1f5f9, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .service-hero p {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      max-width: 600px;
+      margin: 16px auto 28px;
+      line-height: 1.7;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto 40px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .feature-card:hover {
+      border-color: rgba(251,191,36,0.3);
+      transform: translateY(-4px);
+    }
+    .feature-card i {
+      font-size: 2rem;
+      color: #fbbf24;
+      margin-bottom: 10px;
+    }
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .feature-card p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+    .btn-coming {
+      display: inline-block;
+      padding: 14px 40px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      background: #fbbf24;
+      color: #0a0f1e;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    .btn-coming:hover {
+      transform: scale(1.02);
+      filter: brightness(1.05);
+    }
+    .btn-whatsapp-service {
+      display: inline-block;
+      padding: 14px 40px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      background: #25D366;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      margin-left: 12px;
+    }
+    .btn-whatsapp-service:hover {
+      transform: scale(1.02);
+      filter: brightness(1.05);
+    }
+    @media (max-width: 600px) {
+      .service-hero h1 { font-size: 2rem; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .btn-coming, .btn-whatsapp-service { display: block; width: 100%; margin: 6px 0; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <a href="index.html" class="logo-link">
+    <img src="logo.png" alt="SYSTENOV" class="logo-img">
+    <span class="logo-text">SYSTENOV</span>
+  </a>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#pricing">Tarifs</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html" class="btn-nav">Connexion</a>
+    <a href="admin.html" class="admin-link" style="color:#ffd700; font-weight:bold;">Admin</a>
+  </div>
+</div>
+
+<section class="service-hero">
+  <div class="icon-big"><i class="fas fa-chart-pie"></i></div>
+  <h1>📊 Outils Business</h1>
+  <p>Analysez vos données, suivez vos KPI, créez des prévisions et des tableaux de bord intelligents avec l'IA.</p>
+  <div>
+    <a href="#" class="btn-coming"><i class="fas fa-rocket"></i> Prochainement</a>
+    <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20utiliser%20vos%20outils%20business." target="_blank" class="btn-whatsapp-service">
+      <i class="fab fa-whatsapp"></i> Demander un devis
+    </a>
+  </div>
+</section>
+
+<section style="padding: 20px 0 50px;">
+  <div class="features-grid">
+    <div class="feature-card">
+      <i class="fas fa-chart-bar"></i>
+      <h3>KPI & analytics</h3>
+      <p>Suivez vos indicateurs clés.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-robot"></i>
+      <h3>Analyse IA</h3>
+      <p>Insights automatiques.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-table"></i>
+      <h3>Dashboards</h3>
+      <p>Visualisation interactive.</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-bullseye"></i>
+      <h3>Prévisions</h3>
+      <p>Anticipez les tendances.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 SYSTENOV – Tous droits réservés</p>
+  <div style="margin-top:8px; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    <a href="privacy.html">Politique de confidentialité</a>
+    <a href="terms.html">Conditions d'utilisation</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://wa.me/212665998835" target="_blank" style="color:#25D366;">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>

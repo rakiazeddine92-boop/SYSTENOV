@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SYSTENOV - Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0f1e; color: #e2e8f0; padding: 20px; min-height: 100vh; }
+    .app { max-width: 1100px; margin: 0 auto; }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 28px;
+      border-radius: 60px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo { font-weight: 800; font-size: 1.3rem; background: linear-gradient(135deg, #60a5fa, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 10px; }
+    .logo i { font-size: 1.4rem; -webkit-text-fill-color: #38bdf8; }
+    .nav-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+    .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+    .nav-links a:hover { color: #60a5fa; }
+    .nav-links .logout-link { color: #f87171; cursor: pointer; font-weight: 600; }
+    .nav-links .logout-link:hover { color: #ef4444; }
+    .card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+    .card:hover { border-color: rgba(96,165,250,0.2); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .card-header i { font-size: 1.4rem; color: #60a5fa; width: 32px; text-align: center; }
+    .card-header h2 { font-size: 1.2rem; font-weight: 600; color: #f1f5f9; }
+    input, select, button {
+      padding: 12px 18px;
+      margin: 6px 0;
+      border-radius: 12px;
+      border: none;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+    input, select {
+      background: rgba(255,255,255,0.06);
+      color: #e2e8f0;
+      width: calc(100% - 20px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    input:focus, select:focus { outline: none; border-color: #60a5fa; background: rgba(255,255,255,0.08); box-shadow: 0 0 0 3px rgba(96,165,250,0.15); }
+    input::placeholder { color: #64748b; }
+    select option { background: #1e293b; color: #e2e8f0; }
+    button {
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    button:hover { background: #3b82f6; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+    .btn-danger { background: #dc2626; }
+    .btn-danger:hover { background: #ef4444; box-shadow: 0 8px 24px rgba(220,38,38,0.3); }
+    .btn-success { background: #16a34a; }
+    .btn-success:hover { background: #22c55e; box-shadow: 0 8px 24px rgba(22,163,74,0.3); }
+    .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+    .btn-group button { flex: 1; min-width: 120px; }
+    #planText {
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 18px;
+      background: rgba(96,165,250,0.08);
+      border-radius: 14px;
+      text-align: center;
+      border: 1px solid rgba(96,165,250,0.1);
+      margin: 10px 0;
+    }
+    .pro-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #0a0f1e;
+      padding: 4px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .free-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.08);
+      padding: 4px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .usage-bar { margin-top: 12px; height: 6px; background: rgba(255,255,255,0.06); border-radius: 6px; overflow: hidden; }
+    .usage-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #38bdf8); border-radius: 6px; transition: width 0.6s ease; }
+    .welcome-msg {
+      text-align: center;
+      font-size: 1.1rem;
+      padding: 16px 24px;
+      background: rgba(96,165,250,0.06);
+      border-radius: 16px;
+      border-left: 4px solid #3b82f6;
+      margin-bottom: 24px;
+      color: #cbd5e1;
+    }
+    .welcome-msg strong { color: #f1f5f9; }
+    .model-selector { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+    .model-selector label { color: #94a3b8; font-size: 0.9rem; font-weight: 500; }
+    .model-selector select { flex: 1; min-width: 180px; padding: 10px 16px; }
+    #result {
+      margin-top: 16px;
+      padding: 18px 20px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 14px;
+      white-space: pre-wrap;
+      min-height: 80px;
+      max-height: 420px;
+      overflow-y: auto;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    #result::-webkit-scrollbar { width: 4px; }
+    #result::-webkit-scrollbar-track { background: transparent; }
+    #result::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+    .history-item {
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border-left: 3px solid #3b82f6;
+      transition: background 0.2s;
+    }
+    .history-item:hover { background: rgba(255,255,255,0.06); }
+    .history-item .question { font-weight: 600; color: #60a5fa; display: flex; align-items: center; gap: 8px; }
+    .history-item .answer { color: #94a3b8; font-size: 0.9rem; margin-top: 4px; }
+    .history-item small { color: #475569; font-size: 0.7rem; display: block; margin-top: 6px; }
+    .loader {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn-loading { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .thinking { animation: pulse 1.2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .affiliate-card .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 12px; }
+    .affiliate-card .stat-box { background: rgba(255,255,255,0.02); border-radius: 12px; padding: 14px; text-align: center; border: 1px solid rgba(255,255,255,0.04); }
+    .affiliate-card .stat-box .label { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.3px; }
+    .affiliate-card .stat-box .value { font-size: 1.6rem; font-weight: 700; color: #f1f5f9; }
+    .affiliate-card .stat-box .value.gold { color: #fbbf24; }
+    .affiliate-card .stat-box .value.green { color: #34d399; }
+    .affiliate-link-box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+    .affiliate-link-box input { flex: 1; min-width: 200px; background: rgba(255,255,255,0.06); color: #e2e8f0; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); font-size: 0.9rem; }
+    .btn-join { background: #fbbf24; color: #0a0f1e; padding: 10px 28px; border: none; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+    .btn-join:hover { transform: scale(1.02); filter: brightness(1.05); }
+    @media (max-width: 640px) {
+      body { padding: 12px; }
+      .navbar { flex-direction: column; text-align: center; padding: 16px 20px; }
+      .card { padding: 20px; }
+      .btn-group { flex-direction: column; }
+      .btn-group button { flex: none; }
+      .affiliate-card .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== NAVBAR ===== -->
+  <div class="navbar">
+    <div class="logo"><i class="fas fa-brain"></i> SYSTENOV</div>
+    <div class="nav-links">
+      <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+      <a href="solutions.html"><i class="fas fa-cogs"></i> Solutions</a>
+      <a href="products.html"><i class="fas fa-cube"></i> Produits</a>
+      <a href="services.html"><i class="fas fa-tools"></i> Services</a>
+      <a href="affiliate-tools.html"><i class="fas fa-link"></i> Outils</a>
+      <a href="pricing.html"><i class="fas fa-tags"></i> Tarifs</a>
+      <a href="#" id="navLoginLink" class="logout-link"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+    </div>
+  </div>
+
+  <h1 style="text-align:center; font-size:2rem; font-weight:800; background:linear-gradient(135deg,#60a5fa,#38bdf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:24px;">🚀 Tableau de bord</h1>
+
+  <div id="welcomeMsg" class="welcome-msg" style="display:none;">
+    👋 Bonjour, <strong id="userEmailDisplay"></strong>
+  </div>
+    <!-- ===== AUTH CARD ===== -->
+  <div class="card" id="authCard">
+    <div class="card-header"><i class="fas fa-lock"></i><h2>Authentification</h2></div>
+    <input id="email" placeholder="Email professionnel" type="email">
+    <input id="password" placeholder="Mot de passe" type="password">
+    <div class="btn-group">
+      <button onclick="register()" id="registerBtn" class="btn-success"><i class="fas fa-user-plus"></i> Créer un compte</button>
+      <button onclick="login()" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
+      <button onclick="logout()" class="btn-danger" id="logoutBtn" style="display:none;"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+    </div>
+  </div>
+
+  <!-- ===== PLAN CARD ===== -->
+  <div class="card">
+    <div class="card-header"><i class="fas fa-gem"></i><h2>Votre forfait <span id="planBadge" class="free-badge">GRATUIT</span></h2></div>
+    <p id="planText">🔓 Non connecté</p>
+    <div class="usage-bar"><div class="usage-fill" id="usageFill" style="width:0%"></div></div>
+    <button onclick="goToPricing()" id="upgradeBtn" style="margin-top:14px; width:100%;"><i class="fas fa-arrow-right"></i> Mettre à jour mon forfait</button>
+  </div>
+
+  <!-- ===== AI CARD ===== -->
+  <div class="card">
+    <div class="card-header"><i class="fas fa-robot"></i><h2>🤖 Générateur IA</h2></div>
+    <div class="model-selector">
+      <label><i class="fas fa-microchip"></i> Modèle :</label>
+      <select id="modelSelect">
+        <option value="deepseek/deepseek-v4-flash">DeepSeek Flash</option>
+        <option value="deepseek/deepseek-v4-pro">DeepSeek Pro</option>
+        <option value="mistralai/mistral-large-3">Mistral Large</option>
+        <option value="meta-llama/llama-4">Llama 4</option>
+        <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
+      </select>
+    </div>
+    <input id="msg" placeholder="Posez votre question... ex: Rédige un e-mail, Explique l'IA...">
+    <button onclick="sendAI()" id="sendAiBtn" style="width:100%;"><i class="fas fa-wand-magic-sparkles"></i> Générer</button>
+    <div id="result">💡 La réponse de l'IA apparaîtra ici...</div>
+    <small id="usageCounter" style="color:#64748b; display:block; margin-top:10px; font-size:0.8rem;"></small>
+  </div>
+
+  <!-- ===== AFFILIATE CARD ===== -->
+  <div class="card affiliate-card" id="affiliateCard" style="display:none;">
+    <div class="card-header"><i class="fas fa-handshake"></i><h2>🤝 Programme d'affiliation</h2></div>
+    <p style="color:#94a3b8; margin-bottom:12px; font-size:0.95rem;">
+      Gagnez <strong style="color:#fbbf24;">20%</strong> sur chaque vente réalisée via votre lien de parrainage.
+    </p>
+    <div class="affiliate-link-box" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+      <input id="referralLink" readonly value="">
+      <button onclick="copyReferralLink()" style="background:#2563eb; color:white; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-weight:600; white-space:nowrap;">
+        <i class="fas fa-copy"></i> Copier
+      </button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="label">Ventes</div><div class="value" id="affiliateSales">0</div></div>
+      <div class="stat-box"><div class="label">Commissions</div><div class="value gold" id="affiliateEarnings">$0.00</div></div>
+      <div class="stat-box"><div class="label">Clients</div><div class="value green" id="affiliateClients">0</div></div>
+    </div>
+    <div id="affiliateJoinMsg" style="margin-top:14px; text-align:center; display:none;">
+      <p style="color:#94a3b8;">👉 Rejoignez le programme d'affiliation dès maintenant !</p>
+      <button onclick="joinAffiliate()" class="btn-join"><i class="fas fa-rocket"></i> Rejoindre</button>
+    </div>
+  </div>
+
+  <!-- ===== HISTORY CARD ===== -->
+  <div class="card" id="historyCard" style="display:none;">
+    <div class="card-header"><i class="fas fa-clock-rotate-left"></i><h2>📜 Historique des conversations</h2></div>
+    <div id="historyContainer"></div>
+    <button onclick="clearHistory()" class="btn-danger" style="margin-top:12px;"><i class="fas fa-trash-can"></i> Effacer l'historique</button>
+  </div>
+
+</div>
+
+<!-- ===== FIREBASE SDK ===== -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // ==================== CONFIGURATION ====================
+  const firebaseConfig = {
+    apiKey: "AIzaSyDljdOGc96R7DRIFylZm65LADefjWCpeNA",
+    authDomain: "systenov-platforme.firebaseapp.com",
+    projectId: "systenov-platforme",
+    storageBucket: "systenov-platforme.firebasestorage.app",
+    messagingSenderId: "357439238725",
+    appId: "1:357439238725:web:5a5b3868072035c086e92c"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  let currentUser = null, userData = null;
+
+  // ==================== SYSTEM PROMPT ====================
+  const SYSTEM_PROMPT = `Tu es SYSTENOV AI, un assistant intelligent spécialisé dans l'automatisation, la création de sites, de SaaS, l'analyse de données et l'optimisation industrielle. Réponds en français, précis et structuré.`;
+    // ==================== APPEL AU WORKER (ai-proxy) ====================
+  async function callAI(prompt, model) {
+    try {
+      const response = await fetch('https://ai-proxy.raki-azeddine92.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: prompt,
+          model: model || 'deepseek/deepseek-v4-flash',
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        return { success: false, error: data.error || `Erreur ${response.status}` };
+      }
+      if (!data.success || !data.text) {
+        return { success: false, error: data.error || 'Réponse vide' };
+      }
+      return { success: true, text: data.text };
+    } catch (err) {
+      return {
+        success: false,
+        error: err.name === 'AbortError' ? "Temps d'attente dépassé" : err.message,
+      };
+    }
+  }
+
+  // ==================== HISTORY ====================
+  async function saveConversation(uid, prompt, response) {
+    try {
+      await db.collection("conversations").add({
+        userId: uid,
+        prompt: prompt,
+        response: response,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (e) { console.error(e); }
+  }
+
+  async function loadHistory(uid) {
+    try {
+      const snapshot = await db.collection("conversations")
+        .where("userId", "==", uid)
+        .orderBy("createdAt", "desc")
+        .limit(20)
+        .get();
+      const container = document.getElementById("historyContainer");
+      const card = document.getElementById("historyCard");
+      if (snapshot.empty) {
+        container.innerHTML = "<p style='color:#64748b;'>Aucune conversation.</p>";
+        card.style.display = "block";
+        return;
+      }
+      let html = "";
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const date = data.createdAt?.toDate?.() || new Date();
+        const safePrompt = (data.prompt || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const safeResponse = (data.response || '').substring(0, 200).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        html += `
+          <div class="history-item">
+            <div class="question"><i class="fas fa-question-circle"></i> ${safePrompt}</div>
+            <div class="answer">${safeResponse}${data.response && data.response.length > 200 ? '...' : ''}</div>
+            <small><i class="far fa-clock"></i> ${date.toLocaleString()}</small>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+      card.style.display = "block";
+    } catch (e) { console.error(e); }
+  }
+
+  async function clearHistory() {
+    if (!currentUser || !confirm("Effacer tout l'historique ?")) return;
+    try {
+      const snapshot = await db.collection("conversations")
+        .where("userId", "==", currentUser.uid)
+        .get();
+      const batch = db.batch();
+      snapshot.forEach(doc => batch.delete(doc.ref));
+      await batch.commit();
+      document.getElementById("historyContainer").innerHTML = "<p style='color:#64748b;'>Historique effacé.</p>";
+    } catch (e) { alert("❌ Erreur: " + e.message); }
+  }
+
+  // ==================== LOADER ====================
+  function setLoading(btn, loading, text) {
+    if (loading) {
+      btn.disabled = true;
+      btn.innerHTML = `<span class="loader"></span> Chargement...`;
+      btn.classList.add("btn-loading");
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = text || btn.dataset.originalText || "Générer";
+      btn.classList.remove("btn-loading");
+    }
+  }
+
+  // ==================== UPDATE UI ====================
+  async function updateUI() {
+    const planText = document.getElementById('planText');
+    const usageCounter = document.getElementById('usageCounter');
+    const planBadge = document.getElementById('planBadge');
+    const upgradeBtn = document.getElementById('upgradeBtn');
+    const usageFill = document.getElementById('usageFill');
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const userEmailDisplay = document.getElementById('userEmailDisplay');
+    const authCard = document.getElementById('authCard');
+    const registerBtn = document.getElementById('registerBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const navLoginLink = document.getElementById('navLoginLink');
+    const affiliateCard = document.getElementById('affiliateCard');
+
+    if (!currentUser) {
+      planText.innerHTML = '🔓 Non connecté';
+      usageCounter.innerHTML = '';
+      planBadge.innerHTML = 'GRATUIT';
+      planBadge.className = 'free-badge';
+      upgradeBtn.style.display = 'none';
+      usageFill.style.width = '0%';
+      welcomeMsg.style.display = 'none';
+      authCard.style.display = 'block';
+      registerBtn.style.display = 'inline-block';
+      loginBtn.style.display = 'inline-block';
+      logoutBtn.style.display = 'none';
+      navLoginLink.textContent = 'Connexion';
+      navLoginLink.href = 'login.html';
+      navLoginLink.onclick = null;
+      document.getElementById("historyCard").style.display = "none";
+      affiliateCard.style.display = "none";
+      return;
+    }
+
+    const ref = db.collection('users').doc(currentUser.uid);
+    const snap = await ref.get();
+    userData = snap.data();
+    if (!userData) {
+      userData = { plan: 'free', usage: 0, email: currentUser.email };
+      await ref.set(userData);
+    }
+
+    const isPro = userData?.plan === 'pro';
+    const usage = userData?.usage || 0;
+    const maxFree = 10;
+    const remaining = isPro ? '∞' : (maxFree - usage);
+    const percentUsed = isPro ? 100 : Math.min((usage / maxFree) * 100, 100);
+
+    if (isPro) {
+      planText.innerHTML = '💎 Forfait PRO - Accès illimité 🚀';
+      planBadge.innerHTML = 'PRO ⭐';
+      planBadge.className = 'pro-badge';
+      usageCounter.innerHTML = '🎉 Requêtes illimitées !';
+      usageFill.style.background = 'linear-gradient(90deg, #fbbf24, #f59e0b)';
+      upgradeBtn.innerHTML = '<i class="fas fa-check-circle"></i> Pro actif';
+      upgradeBtn.disabled = true;
+      upgradeBtn.style.display = 'inline-block';
+      affiliateCard.style.display = 'block';
+    } else {
+      planText.innerHTML = `⚠️ Forfait GRATUIT - ${remaining} requêtes restantes`;
+      planBadge.innerHTML = 'GRATUIT';
+      planBadge.className = 'free-badge';
+      usageCounter.innerHTML = `📊 Utilisation : ${usage}/${maxFree} • ${remaining} restantes`;
+      usageFill.style.background = 'linear-gradient(90deg, #3b82f6, #38bdf8)';
+      upgradeBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Mettre à jour mon forfait';
+      upgradeBtn.disabled = false;
+      upgradeBtn.style.display = 'inline-block';
+      affiliateCard.style.display = 'none';
+    }
+    usageFill.style.width = `${percentUsed}%`;
+
+    welcomeMsg.style.display = 'block';
+    userEmailDisplay.textContent = currentUser.email;
+    authCard.style.display = 'none';
+    navLoginLink.textContent = 'Déconnexion';
+    navLoginLink.href = '#';
+    navLoginLink.onclick = (e) => { e.preventDefault(); logout(); };
+    await loadHistory(currentUser.uid);
+    await updateAffiliateUI();
+  }
+
+  // ===== AFFILIATE =====
+  async function updateAffiliateUI() {
+    const affiliateCard = document.getElementById('affiliateCard');
+    const referralLinkInput = document.getElementById('referralLink');
+    const joinMsg = document.getElementById('affiliateJoinMsg');
+
+    if (!affiliateCard || !referralLinkInput || !joinMsg) return;
+    if (!currentUser) { affiliateCard.style.display = 'none'; return; }
+
+    affiliateCard.style.display = 'block';
+    const refCode = currentUser.uid.substring(0, 8);
+    referralLinkInput.value = `${window.location.origin}/ref/${refCode}`;
+
+    try {
+      const ref = db.collection('affiliates').doc(currentUser.uid);
+      const snap = await ref.get();
+      if (snap.exists) {
+        const data = snap.data() || {};
+        document.getElementById('affiliateSales').textContent = data.sales || 0;
+        document.getElementById('affiliateEarnings').textContent = `$${Number(data.earnings || 0).toFixed(2)}`;
+        document.getElementById('affiliateClients').textContent = data.clients || 0;
+        joinMsg.style.display = 'none';
+      } else {
+        document.getElementById('affiliateSales').textContent = '0';
+        document.getElementById('affiliateEarnings').textContent = '$0.00';
+        document.getElementById('affiliateClients').textContent = '0';
+        joinMsg.style.display = 'block';
+      }
+    } catch (e) {
+      console.error('Erreur chargement affiliate:', e);
+      joinMsg.style.display = 'none';
+    }
+  }
+
+  window.copyReferralLink = async function() {
+    const input = document.getElementById('referralLink');
+    if (!input || !input.value) return;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(input.value);
+      } else {
+        input.focus();
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+        if (!document.execCommand('copy')) throw new Error('copy failed');
+      }
+      alert('✅ Lien copié dans le presse-papiers !');
+    } catch (e) {
+      alert('❌ Impossible de copier le lien. Sélectionnez-le manuellement.');
+    }
+  };
+
+  window.joinAffiliate = async function() {
+    if (!currentUser) { alert('Veuillez vous connecter d\'abord.'); return; }
+    try {
+      const affiliateRef = db.collection('affiliates').doc(currentUser.uid);
+      const existing = await affiliateRef.get();
+      if (!existing.exists) {
+        await affiliateRef.set({
+          userId: currentUser.uid,
+          email: currentUser.email,
+          joinedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          sales: 0,
+          earnings: 0,
+          clients: 0
+        });
+      }
+      alert('✅ Vous avez rejoint le programme d\'affiliation !');
+      await updateAffiliateUI();
+    } catch (e) {
+      alert('❌ Erreur: ' + e.message);
+    }
+  };
+
+  // ==================== AUTH ====================
+  window.register = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const btn = document.getElementById('registerBtn');
+    if (!email || !password) return alert('Veuillez remplir tous les champs');
+    if (password.length < 6) return alert('Mot de passe : 6 caractères minimum');
+    setLoading(btn, true, 'Créer un compte');
+    try {
+      const userCred = await auth.createUserWithEmailAndPassword(email, password);
+      const user = userCred.user;
+      await user.sendEmailVerification();
+      await db.collection('users').doc(user.uid).set({
+        plan: 'free',
+        usage: 0,
+        email: email,
+        createdAt: new Date().toISOString()
+      });
+      await auth.signOut();
+      alert('✅ Compte créé ! Vérifiez votre email.');
+    } catch (err) {
+      alert(err.code === 'auth/email-already-in-use' ? '❌ Email déjà utilisé.' : '❌ Erreur : ' + err.message);
+    } finally {
+      setLoading(btn, false, 'Créer un compte');
+    }
+  };
+
+  window.login = async () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const btn = document.getElementById('loginBtn');
+    if (!email || !password) return alert('Email et mot de passe requis');
+    setLoading(btn, true, 'Se connecter');
+    try {
+      const userCred = await auth.signInWithEmailAndPassword(email, password);
+      const user = userCred.user;
+      if (!user.emailVerified) {
+        await auth.signOut();
+        alert('❌ Vérifiez votre email.');
+        return;
+      }
+      alert('✅ Connecté !');
+    } catch (err) {
+      alert(err.code === 'auth/user-not-found' ? '❌ Utilisateur inexistant.' : '❌ Erreur : ' + err.message);
+    } finally {
+      setLoading(btn, false, 'Se connecter');
+    }
+  };
+
+  window.logout = async () => {
+    const btn = document.getElementById('logoutBtn');
+    setLoading(btn, true, 'Déconnexion');
+    try {
+      await auth.signOut();
+      currentUser = null;
+      userData = null;
+      document.getElementById('result').innerHTML = '💡 La réponse de l\'IA apparaîtra ici...';
+      document.getElementById('automationResult').innerHTML = '💡 Cliquez sur un outil pour générer du contenu.';
+      await updateUI();
+      alert('Déconnecté');
+    } catch (err) {
+      alert('❌ Erreur: ' + err.message);
+    } finally {
+      setLoading(btn, false, 'Déconnexion');
+    }
+  };
+
+  window.goToPricing = function() {
+    window.location.href = 'pricing.html';
+  };
+
+  // ==================== USER STATE ====================
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) { window.location.href = "login.html"; return; }
+    if (!user.emailVerified) {
+      await auth.signOut();
+      alert('❌ Vérifiez votre email.');
+      window.location.href = "login.html";
+      return;
+    }
+    currentUser = user;
+    await updateUI();
+  });
+
+  // ==================== AI GENERATOR ====================
+  window.sendAI = async () => {
+    if (!currentUser) return alert('Connectez-vous');
+    const msg = document.getElementById('msg').value.trim();
+    if (!msg) return alert('Écrivez quelque chose');
+    const isPro = userData?.plan === 'pro';
+    const currentUsage = userData?.usage || 0;
+    const maxFree = 10;
+    if (!isPro && currentUsage >= maxFree) {
+      alert(`⚠️ Limite gratuite atteinte (${maxFree}/${maxFree}). Passez à Pro.`);
+      return;
+    }
+    const model = document.getElementById('modelSelect').value;
+    const resultDiv = document.getElementById('result');
+    const btn = document.getElementById('sendAiBtn');
+    setLoading(btn, true, 'Générer');
+    resultDiv.innerHTML = `🤔 Réflexion avec ${model}...`;
+    resultDiv.classList.add('thinking');
+    try {
+      const response = await callAI(msg, model);
+      if (!response.success) {
+        resultDiv.innerHTML = `❌ Erreur: ${response.error}`;
+        resultDiv.classList.remove('thinking');
+        return;
+      }
+      resultDiv.innerHTML = `✨ ${response.text}`;
+      resultDiv.classList.remove('thinking');
+      await saveConversation(currentUser.uid, msg, response.text);
+      if (!isPro) {
+        const newUsage = currentUsage + 1;
+        await db.collection('users').doc(currentUser.uid).update({ usage: newUsage });
+        userData.usage = newUsage;
+        await updateUI();
+      }
+      await loadHistory(currentUser.uid);
+    } catch (err) {
+      resultDiv.innerHTML = '❌ Une erreur est survenue. Réessayez.';
+      resultDiv.classList.remove('thinking');
+    } finally {
+      setLoading(btn, false, 'Générer');
+      document.getElementById('msg').value = '';
+    }
+  };
+
+  // ==================== INIT ====================
+  updateUI();
+</script>
+</body>
+</html>

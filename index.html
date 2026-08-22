@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SYSTENOV – Plateforme IA Multi-Services</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, sans-serif; background: #0a0f1e; color: #e2e8f0; overflow-x: hidden; }
+    .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.06);
+      padding: 10px 28px;
+      border-radius: 60px;
+      margin: 16px auto;
+      max-width: 1200px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .logo-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-img { height: 44px; width: 44px; border-radius: 12px; object-fit: contain; padding: 4px; }
+    .logo-text { font-size: 1.4rem; font-weight: 800; background: linear-gradient(135deg,#f1f5f9,#60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .nav-links a { color: #94a3b8; text-decoration: none; font-size: .9rem; font-weight: 500; padding: 6px 4px; transition: 0.2s; }
+    .nav-links a:hover, .nav-links .active { color: #60a5fa; }
+    .btn-nav { background: #2563eb; color: #fff !important; padding: 8px 22px !important; border-radius: 40px; }
+    .menu-toggle { display: none; background: none; border: 0; color: #e2e8f0; font-size: 1.8rem; cursor: pointer; }
+
+    /* 👇 Admin Link Style */
+    .admin-link {
+      display: none;
+      color: #ffd700 !important;
+      font-weight: 700 !important;
+      background: rgba(255, 215, 0, 0.08);
+      padding: 8px 14px !important;
+      border-radius: 10px;
+    }
+
+    /* ===== HERO ===== */
+    .hero { text-align: center; padding: 50px 20px 70px; }
+    .hero .tag { display: inline-block; background: rgba(96,165,250,.12); color: #60a5fa; padding: 6px 20px; border-radius: 40px; font-size: .8rem; font-weight: 600; margin-bottom: 18px; }
+    .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 14px; background: linear-gradient(135deg,#f1f5f9 30%,#60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1.15rem; color: #94a3b8; max-width: 650px; margin: 0 auto 28px; line-height: 1.6; }
+    .hero-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-primary, .btn-secondary { padding: 14px 36px; border-radius: 40px; font-weight: 600; text-decoration: none; display: inline-flex; gap: 8px; }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-secondary { color: #e2e8f0; border: 1px solid rgba(255,255,255,.1); }
+
+    /* ===== STATS ===== */
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; padding: 30px 0; }
+    .stat-card { text-align: center; background: rgba(255,255,255,.02); border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,.04); }
+    .stat-card h3 { font-size: 2rem; color: #60a5fa; }
+    .stat-card p { color: #94a3b8; }
+
+    /* ===== SERVICES ===== */
+    .services { padding: 50px 0; }
+    .services h2 { text-align: center; font-size: 2rem; }
+    .services .sub { text-align: center; color: #94a3b8; margin: 10px 0 32px; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 24px; }
+    .service-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 20px; padding: 28px 24px; text-align: center; }
+    .service-card .icon { font-size: 2.4rem; margin-bottom: 10px; display: block; }
+    .ai { color: #60a5fa; }
+    .website { color: #34d399; }
+    .saas { color: #f472b6; }
+    .business { color: #fbbf24; }
+    .industrial { color: #f87171; }
+    .products { color: #a78bfa; }
+    .service-card h3 { margin-bottom: 6px; }
+    .service-card p { font-size: .9rem; color: #94a3b8; line-height: 1.5; }
+    .service-card .tag { display: inline-block; margin-top: 10px; padding: 2px 12px; border-radius: 40px; font-size: .65rem; font-weight: 600; }
+    .pro { background: rgba(251,191,36,.12); color: #fbbf24; }
+    .free { background: rgba(52,211,153,.1); color: #34d399; }
+    .service-card a { display: inline-block; margin-top: 10px; color: #60a5fa; text-decoration: none; }
+
+    /* ===== PRICING ===== */
+    .pricing-section { text-align: center; padding: 40px 0; }
+    .pricing-section .sub { color: #94a3b8; margin: 10px 0 28px; }
+    .pricing-grid { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .pricing-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 24px; padding: 32px 28px; width: 280px; }
+    .popular { border: 2px solid #2563eb !important; }
+    .badge { background: #2563eb; color: white; padding: 4px 16px; border-radius: 40px; font-size: .7rem; }
+    .price { font-size: 2rem; color: #60a5fa; margin: 12px; }
+    .price span { font-size: 1rem; color: #94a3b8; }
+    .pricing-card ul { list-style: none; text-align: left; color: #94a3b8; line-height: 2; }
+    .pricing-card .btn { display: inline-block; margin-top: 18px; padding: 10px 28px; background: #2563eb; color: #fff; border-radius: 40px; text-decoration: none; }
+
+    /* ===== FOOTER ===== */
+    footer { text-align: center; padding: 30px; color: #64748b; border-top: 1px solid rgba(255,255,255,.05); margin-top: 40px; }
+    footer a { color: #64748b; text-decoration: none; margin: 0 10px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px) {
+      .navbar { padding: 10px 18px; }
+      .menu-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; width: 100%; }
+      .nav-links.open { display: flex; }
+      .nav-links a, .btn-nav { width: 100%; justify-content: center; text-align: center; }
+      .hero h1 { font-size: 2.2rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .stats { gap: 10px; }
+    }
+    @media(max-width:480px) {
+      .hero h1 { font-size: 1.8rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .pricing-card { width: 100%; max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <a href="index.html" class="logo-link">
+    <img src="logo.png" alt="SYSTENOV" class="logo-img">
+    <span class="logo-text">SYSTENOV</span>
+  </a>
+
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+
+  <div class="nav-links" id="navLinks">
+    <a href="index.html" class="active">Accueil</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="products.html">Produits</a>
+    <a href="services.html">Services</a>
+    <a href="affiliate-tools.html">Outils</a>
+    <a href="pricing.html">Tarifs</a>
+
+    <!-- 👇 Admin Link avec la classe admin-link -->
+    <a href="admin.html" id="adminLink" class="admin-link">⚙️ Admin</a>
+
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html" class="btn-nav">Connexion</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <span class="tag">🚀 Plateforme IA Multi-Services</span>
+  <h1>Bâtissez votre<br>projet numérique</h1>
+  <p>SYSTENOV vous offre tous les outils pour créer, automatiser et vendre : IA, sites web, SaaS, analyses et produits digitaux.</p>
+  <div class="hero-buttons">
+    <a href="dashboard.html" class="btn-primary">🚀 Accéder à la plateforme</a>
+    <a href="solutions.html" class="btn-secondary">Découvrir →</a>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<div class="container">
+  <div class="stats">
+    <div class="stat-card"><h3>4</h3><p>Solutions</p></div>
+    <div class="stat-card"><h3>AI</h3><p>Assistant intégré</p></div>
+    <div class="stat-card"><h3>🔓</h3><p>Plan gratuit</p></div>
+  </div>
+</div>
+
+<!-- ===== SERVICES ===== -->
+<section class="services">
+  <div class="container">
+    <h2>🧠 Que souhaitez-vous construire ?</h2>
+    <p class="sub">Choisissez un outil et laissez l’IA vous assister.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="icon ai"><i class="fas fa-brain"></i></span>
+        <h3>Assistant IA</h3>
+        <p>Contenu, emails, analyses et idées.</p>
+        <span class="tag free">Gratuit</span>
+        <a href="dashboard.html#aiChat">Commencer →</a>
+      </div>
+      <div class="service-card">
+        <span class="icon website"><i class="fas fa-globe"></i></span>
+        <h3>Création de site</h3>
+        <p>Générez un site web complet avec l’IA.</p>
+        <span class="tag pro">Pro</span>
+        <a href="website-builder.html">Essayer →</a>
+      </div>
+      <div class="service-card">
+        <span class="icon saas"><i class="fas fa-cloud"></i></span>
+        <h3>Création de SaaS</h3>
+        <p>Structurez votre projet SaaS de A à Z.</p>
+        <span class="tag pro">Pro</span>
+        <a href="saas-builder.html">Essayer →</a>
+      </div>
+      <div class="service-card">
+        <span class="icon business"><i class="fas fa-chart-pie"></i></span>
+        <h3>Analyses business</h3>
+        <p>KPI, prévisions et tableaux de bord.</p>
+        <span class="tag pro">Pro</span>
+        <a href="business-tools.html">Essayer →</a>
+      </div>
+      <div class="service-card">
+        <span class="icon industrial"><i class="fas fa-industry"></i></span>
+        <h3>Optimisation industrielle</h3>
+        <p>Production, maintenance prédictive et amélioration continue.</p>
+        <span class="tag pro">Pro</span>
+        <a href="industrial-tools.html">Essayer →</a>
+      </div>
+      <div class="service-card">
+        <span class="icon products"><i class="fas fa-cube"></i></span>
+        <h3>Produits numériques</h3>
+        <p>E-books, templates, formations et codes.</p>
+        <span class="tag free">Disponible</span>
+        <a href="products.html">Voir →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="pricing-section">
+  <div class="container">
+    <h2>Choisissez votre formule</h2>
+    <p class="sub">Commencez gratuitement, passez à Pro pour débloquer tous les outils.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Gratuit</h3>
+        <div class="price">0<span> DH/mois</span></div>
+        <ul>
+          <li>✓ 10 requêtes IA</li>
+          <li>✓ Dashboard basique</li>
+          <li>✗ Outils Pro</li>
+        </ul>
+        <a href="login.html" class="btn">Démarrer</a>
+      </div>
+      <div class="pricing-card popular">
+        <span class="badge">⭐ Populaire</span>
+        <h3>Pro</h3>
+        <div class="price">9<span> USD/mois</span></div>
+        <ul>
+          <li>✓ IA illimitée</li>
+          <li>✓ Tous les outils</li>
+          <li>✓ Support prioritaire</li>
+        </ul>
+        <a href="pricing.html" class="btn">Passer à Pro</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2026 SYSTENOV – Tous droits réservés</p>
+  <div style="margin-top:8px">
+    <a href="privacy.html">Confidentialité</a>
+    <a href="terms.html">Conditions</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://wa.me/212665998835" target="_blank">WhatsApp</a>
+  </div>
+</footer>
+
+<!-- ===== FIREBASE ===== -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDljdOGc96R7DRIFylZm65LADefjWCpeNA",
+    authDomain: "systenov-platforme.firebaseapp.com",
+    projectId: "systenov-platforme",
+    storageBucket: "systenov-platforme.firebasestorage.app",
+    messagingSenderId: "357439238725",
+    appId: "1:357439238725:web:5a5b3868072035c086e92c"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+
+  const ADMIN_UID = "1yo41Yh1SRfETkZl9FVu03SPEPB2";
+
+  function checkAdmin() {
+    const adminLink = document.getElementById("adminLink");
+    const user = auth.currentUser;
+
+    if (!adminLink) return;
+
+    if (user && user.uid === ADMIN_UID) {
+      adminLink.style.display = "inline-flex";
+      console.log("✅ ADMIN: accès autorisé");
+      console.log("UID:", user.uid);
+      console.log("Email:", user.email);
+    } else {
+      adminLink.style.display = "none";
+
+      if (user) {
+        console.log("👤 Utilisateur normal:", user.email);
+        console.log("UID:", user.uid);
+      } else {
+        console.log("🔐 Aucun utilisateur connecté");
+      }
+    }
+  }
+
+  auth.onAuthStateChanged(function(user) {
+    checkAdmin();
+  });
+
+  // ===== MENU BURGER =====
+  function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("open");
+  }
+
+  document.querySelectorAll(".nav-links a").forEach(function(link) {
+    link.addEventListener("click", function() {
+      document.getElementById("navLinks").classList.remove("open");
+    });
+  });
+</script>
+
+</body>
+</html>

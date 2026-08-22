@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services - SYSTENOV</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-hero { text-align: center; padding: 50px 20px 60px; }
+    .page-hero h1 { font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, #f1f5f9, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .page-hero p { font-size: 1.1rem; color: #94a3b8; max-width: 650px; margin: 12px auto 0; line-height: 1.7; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .service-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 28px 24px; transition: 0.3s; }
+    .service-card:hover { transform: translateY(-6px); border-color: rgba(167,139,250,0.3); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
+    .service-card .icon { font-size: 2.8rem; margin-bottom: 12px; display: block; }
+    .service-card .icon.web { color: #60a5fa; }
+    .service-card .icon.saas { color: #f472b6; }
+    .service-card .icon.automation { color: #34d399; }
+    .service-card .icon.ai { color: #a78bfa; }
+    .service-card .icon.support { color: #fbbf24; }
+    .service-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; color: #f1f5f9; }
+    .service-card p { font-size: 0.95rem; color: #94a3b8; line-height: 1.6; }
+    .btn-whatsapp-service { display: inline-block; margin-top: 14px; padding: 10px 24px; background: #25D366; color: white; border-radius: 40px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+    .btn-whatsapp-service:hover { transform: scale(1.02); filter: brightness(1.05); }
+    @media (max-width: 600px) { .page-hero h1 { font-size: 2rem; } .services-grid { grid-template-columns: 1fr; padding: 12px; } }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <a href="index.html" class="logo-link">
+    <img src="logo.png" alt="SYSTENOV" class="logo-img">
+    <span class="logo-text">SYSTENOV</span>
+  </a>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="products.html">Produits</a>
+    <a href="services.html" style="color:#a78bfa; font-weight:600;">Services</a>
+    <a href="affiliate-tools.html">Outils recommandés</a>
+    <a href="pricing.html">Tarifs</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html" class="btn-nav">Connexion</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="page-hero">
+  <h1>🛠️ Services sur mesure</h1>
+  <p>Développement web, SaaS, automatisation, IA et accompagnement stratégique pour votre entreprise.</p>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<div class="services-grid">
+  <div class="service-card">
+    <span class="icon web"><i class="fas fa-globe"></i></span>
+    <h3>Développement Web</h3>
+    <p>Sites vitrines, e-commerce, portails et applications web professionnelles.</p>
+    <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20un%20devis%20pour%20un%20site%20web." target="_blank" class="btn-whatsapp-service"><i class="fab fa-whatsapp"></i> Demander un devis</a>
+  </div>
+  <div class="service-card">
+    <span class="icon saas"><i class="fas fa-cloud"></i></span>
+    <h3>Développement SaaS</h3>
+    <p>Plateformes SaaS sur mesure, multi-utilisateurs et scalables.</p>
+    <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20un%20devis%20pour%20un%20SaaS." target="_blank" class="btn-whatsapp-service"><i class="fab fa-whatsapp"></i> Demander un devis</a>
+  </div>
+  <div class="service-card">
+    <span class="icon automation"><i class="fas fa-cogs"></i></span>
+    <h3>Automatisation</h3>
+    <p>Automatisation de processus, intégration d'outils et APIs.</p>
+    <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20automatiser%20mes%20processus." target="_blank" class="btn-whatsapp-service"><i class="fab fa-whatsapp"></i> Demander un devis</a>
+  </div>
+  <div class="service-card">
+    <span class="icon ai"><i class="fas fa-brain"></i></span>
+    <h3>IA &amp; Analyse</h3>
+    <p>Modèles IA, analyse prédictive et recommandations intelligentes.</p>
+    <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20un%20service%20IA." target="_blank" class="btn-whatsapp-service"><i class="fab fa-whatsapp"></i> Demander un devis</a>
+  </div>
+  <div class="service-card">
+    <span class="icon support"><i class="fas fa-headset"></i></span>
+    <h3>Support &amp; Accompagnement</h3>
+    <p>Support technique, formation et accompagnement stratégique.</p>
+    <a href="https://wa.me/212665998835?text=Bonjour%20SYSTENOV%2C%20je%20souhaite%20un%20accompagnement." target="_blank" class="btn-whatsapp-service"><i class="fab fa-whatsapp"></i> Demander un devis</a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2026 SYSTENOV – Tous droits réservés</p>
+  <div style="margin-top:8px; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    <a href="privacy.html">Politique de confidentialité</a>
+    <a href="terms.html">Conditions d'utilisation</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://wa.me/212665998835" target="_blank" style="color:#25D366;">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>

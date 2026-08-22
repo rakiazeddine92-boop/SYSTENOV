@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - SYSTENOV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0f1e; color: #e2e8f0; padding: 24px; min-height: 100vh; }
+    .app { max-width: 1280px; margin: 0 auto; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.06); padding: 12px 28px; border-radius: 60px; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+    .logo { font-weight: 800; font-size: 1.3rem; background: linear-gradient(135deg,#60a5fa,#38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 10px; }
+    .logo i { font-size: 1.4rem; -webkit-text-fill-color: #38bdf8; }
+    .nav-links { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+    .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+    .nav-links a:hover { color: #60a5fa; }
+    .header-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn { padding: 10px 20px; border: none; border-radius: 12px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary:hover { background: #3b82f6; transform: translateY(-2px); }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-danger:hover { background: #ef4444; transform: translateY(-2px); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 22px 20px; text-align: center; transition: 0.3s; }
+    .stat-card:hover { border-color: rgba(96,165,250,0.2); transform: translateY(-4px); }
+    .stat-card .number { font-size: 2.4rem; font-weight: 800; color: #60a5fa; }
+    .stat-card .number.gold { color: #fbbf24; }
+    .stat-card .number.green { color: #34d399; }
+    .stat-card .number.pink { color: #f472b6; }
+    .stat-card .label { font-size: 0.85rem; color: #94a3b8; margin-top: 4px; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; align-items: center; }
+    .toolbar input { flex: 1; min-width: 220px; padding: 12px 18px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: #e2e8f0; font-size: 0.95rem; font-family: 'Inter',sans-serif; }
+    .toolbar input:focus { outline: none; border-color: #60a5fa; }
+    .toolbar input::placeholder { color: #64748b; }
+    .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-buttons button { padding: 8px 18px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.06); background: transparent; color: #94a3b8; cursor: pointer; transition: 0.2s; font-weight: 500; font-size: 0.85rem; font-family: 'Inter',sans-serif; }
+    .filter-buttons button.active { background: #2563eb; color: white; border-color: #2563eb; }
+    .table-wrapper { overflow-x: auto; border-radius: 20px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { text-align: left; padding: 16px 18px; background: rgba(255,255,255,0.04); color: #94a3b8; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    td { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+    .badge { padding: 4px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; display: inline-block; }
+    .badge-free { background: rgba(255,255,255,0.08); color: #94a3b8; }
+    .badge-pro { background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #0a0f1e; }
+    .btn-sm { padding: 6px 14px; border: none; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Inter',sans-serif; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-sm-upgrade { background: #16a34a; color: white; }
+    .btn-sm-revert { background: #d97706; color: white; }
+    .btn-sm-details { background: rgba(255,255,255,0.08); color: #cbd5e1; }
+    .btn-sm-delete { background: #dc2626; color: white; }
+    .cell-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .modal { display: none; position: fixed; inset: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); justify-content: center; align-items: center; z-index: 1000; }
+    .modal.show { display: flex; }
+    .modal-box { background: #1e293b; padding: 32px; border-radius: 24px; max-width: 500px; width: 92%; border: 1px solid rgba(255,255,255,0.06); }
+    .modal-box h2 { color: #60a5fa; margin-bottom: 16px; }
+    .modal-box p { margin: 8px 0; color: #cbd5e1; word-break: break-word; }
+    .close-btn { margin-top: 20px; padding: 10px 24px; border: none; border-radius: 12px; background: #dc2626; color: white; font-weight: 600; cursor: pointer; }
+    @media(max-width:640px) { body { padding: 14px; } .navbar { flex-direction: column; text-align: center; } .nav-links { justify-content: center; } .stats { grid-template-columns: repeat(2,1fr); } .stat-card .number { font-size: 1.8rem; } th, td { padding: 10px 12px; font-size: 0.8rem; } .cell-actions { flex-direction: column; } .btn-sm { width: 100%; justify-content: center; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="navbar">
+    <div class="logo"><i class="fas fa-brain"></i> SYSTENOV</div>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="solutions.html">Solutions</a>
+      <a href="products.html">Produits</a>
+      <a href="services.html">Services</a>
+      <a href="affiliate-tools.html">Outils</a>
+      <a href="pricing.html">Tarifs</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+    <div class="header-actions">
+      <button onclick="loadUsers()" class="btn btn-primary"><i class="fas fa-rotate"></i> Actualiser</button>
+      <button onclick="logout()" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card"><div class="number" id="totalUsers">0</div><div class="label">Total utilisateurs</div></div>
+    <div class="stat-card"><div class="number gold" id="proUsers">0</div><div class="label">⭐ Pro</div></div>
+    <div class="stat-card"><div class="number" id="freeUsers">0</div><div class="label">🆓 Free</div></div>
+    <div class="stat-card"><div class="number green" id="totalUsage">0</div><div class="label">Requêtes IA</div></div>
+    <div class="stat-card"><div class="number pink" id="revenue">0 $</div><div class="label">💰 Revenus</div></div>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" id="searchInput" placeholder="🔍 Rechercher par email..." oninput="applyFilters()">
+    <div class="filter-buttons">
+      <button class="active" data-filter="all" onclick="setFilter('all')">Tous</button>
+      <button data-filter="free" onclick="setFilter('free')">🆓 Free</button>
+      <button data-filter="pro" onclick="setFilter('pro')">⭐ Pro</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Email</th><th>Plan</th><th>Usage</th><th>UID</th><th>Actions</th></tr></thead>
+      <tbody id="usersTable"><tr><td colspan="5" style="text-align:center; color:#64748b; padding:40px;">⏳ Vérification Admin...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" id="userModal">
+  <div class="modal-box">
+    <h2><i class="fas fa-user-circle"></i> Détails utilisateur</h2>
+    <div id="userDetailsContent"></div>
+    <button class="close-btn" onclick="closeModal()">Fermer</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDljdOGc96R7DRIFylZm65LADefjWCpeNA",
+  authDomain: "systenov-platforme.firebaseapp.com",
+  projectId: "systenov-platforme",
+  storageBucket: "systenov-platforme.firebasestorage.app",
+  messagingSenderId: "357439238725",
+  appId: "1:357439238725:web:5a5b3868072035c086e92c"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+const ADMIN_UID = "1yo41Yh1SRfETkZl9FVu03SPEPB2";
+let allUsers = [];
+let currentFilter = "all";
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+auth.onAuthStateChanged(async (user) => {
+  if (!user) { window.location.href = "login.html"; return; }
+  if (user.uid !== ADMIN_UID) {
+    document.body.innerHTML = `<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:#0a0f1e;color:#f87171;padding:30px;font-family:Inter,sans-serif;"><div><div style="font-size:4rem;margin-bottom:15px;">⛔</div><h1>Accès refusé</h1><p style="margin-top:12px;color:#94a3b8;">Vous n'êtes pas administrateur.</p><p style="margin-top:10px;color:#64748b;font-size:.8rem;">UID non autorisé.</p><a href="index.html" style="display:inline-block;margin-top:25px;color:#60a5fa;text-decoration:none;font-weight:600;">← Retour</a></div></div>`;
+    return;
+  }
+  console.log("✅ SYSTENOV ADMIN CONNECTÉ");
+  await loadUsers();
+});
+
+window.logout = async function() {
+  try { await auth.signOut(); window.location.href = "index.html"; } catch(error) { alert("❌ Erreur : " + error.message); }
+};
+
+window.loadUsers = async function() {
+  const tbody = document.getElementById("usersTable");
+  if (!tbody) return;
+  try {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:40px;color:#60a5fa;">⏳ Chargement...</td></tr>`;
+    const snapshot = await db.collection("users").get();
+    allUsers = [];
+    snapshot.forEach((doc) => { allUsers.push({ id: doc.id, ...doc.data() }); });
+    allUsers.sort((a,b) => (Number(b.usage) || 0) - (Number(a.usage) || 0));
+    applyFilters();
+  } catch(error) {
+    console.error("Firestore error:", error);
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#f87171;padding:40px;">❌ Erreur Firestore<br><br><small>${escapeHtml(error.message)}</small></td></tr>`;
+  }
+};
+
+window.applyFilters = function() {
+  const input = document.getElementById("searchInput");
+  const search = input ? input.value.toLowerCase().trim() : "";
+  let users = [...allUsers];
+  if (search) users = users.filter(user => (user.email || "").toLowerCase().includes(search));
+  if (currentFilter === "free") users = users.filter(user => (user.plan || "free") !== "pro");
+  if (currentFilter === "pro") users = users.filter(user => user.plan === "pro");
+  renderTable(users);
+  updateStats(users);
+};
+
+function renderTable(users) {
+  const tbody = document.getElementById("usersTable");
+  if (!tbody) return;
+  if (!users.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#64748b;padding:30px;">Aucun utilisateur</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = users.map((user) => {
+    const plan = user.plan || "free";
+    return `
+      <tr>
+        <td>${escapeHtml(user.email || "N/A")}</td>
+        <td><span class="badge ${plan === "pro" ? "badge-pro" : "badge-free"}">${escapeHtml(plan.toUpperCase())}</span></td>
+        <td>${Number(user.usage) || 0}</td>
+        <td style="font-size:.7rem;color:#64748b;">${escapeHtml(user.id.substring(0,8))}…</td>
+        <td class="cell-actions">
+          ${plan === "pro"
+            ? `<button class="btn-sm btn-sm-revert" onclick="revertToFree('${escapeHtml(user.id)}')">↩ Free</button>`
+            : `<button class="btn-sm btn-sm-upgrade" onclick="upgradeUser('${escapeHtml(user.id)}')">↑ Pro</button>`
+          }
+          <button class="btn-sm btn-sm-details" onclick="showUserDetails('${escapeHtml(user.id)}')">👁</button>
+          <button class="btn-sm btn-sm-delete" onclick="deleteUser('${escapeHtml(user.id)}')">🗑</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function updateStats(users) {
+  const total = users.length;
+  const pro = users.filter(user => user.plan === "pro").length;
+  const free = total - pro;
+  const usage = users.reduce((sum,user) => sum + (Number(user.usage) || 0), 0);
+  document.getElementById("totalUsers").textContent = total;
+  document.getElementById("proUsers").textContent = pro;
+  document.getElementById("freeUsers").textContent = free;
+  document.getElementById("totalUsage").textContent = usage;
+  document.getElementById("revenue").textContent = (pro * 9) + " $";
+}
+
+window.setFilter = function(filter) {
+  currentFilter = filter;
+  document.querySelectorAll(".filter-buttons button").forEach(button => {
+    button.classList.toggle("active", button.dataset.filter === filter);
+  });
+  applyFilters();
+};
+
+window.upgradeUser = async function(uid) {
+  if (!confirm("Passer cet utilisateur à Pro ?")) return;
+  try {
+    await db.collection("users").doc(uid).update({ plan: "pro", upgradedAt: new Date().toISOString() });
+    alert("✅ Utilisateur passé en Pro");
+    await loadUsers();
+  } catch(error) { alert("❌ " + error.message); }
+};
+
+window.revertToFree = async function(uid) {
+  if (!confirm("Remettre cet utilisateur en Free ?")) return;
+  try {
+    await db.collection("users").doc(uid).update({ plan: "free" });
+    alert("✅ Utilisateur remis en Free");
+    await loadUsers();
+  } catch(error) { alert("❌ " + error.message); }
+};
+
+window.deleteUser = async function(uid) {
+  const user = allUsers.find(u => u.id === uid);
+  if (!user) return;
+  if (!confirm("Supprimer " + (user.email || uid) + " de Firestore ?")) return;
+  try {
+    await db.collection("users").doc(uid).delete();
+    alert("✅ Supprimé de Firestore");
+    await loadUsers();
+  } catch(error) { alert("❌ " + error.message); }
+};
+
+window.showUserDetails = function(uid) {
+  const user = allUsers.find(u => u.id === uid);
+  if (!user) { alert("Utilisateur introuvable"); return; }
+  let created = "N/A";
+  if (user.createdAt && user.createdAt.seconds) {
+    created = new Date(user.createdAt.seconds * 1000).toLocaleString("fr-FR");
+  } else if (user.createdAt) {
+    const date = new Date(user.createdAt);
+    if (!isNaN(date.getTime())) created = date.toLocaleString("fr-FR");
+  }
+  document.getElementById("userDetailsContent").innerHTML = `
+    <p><strong>UID :</strong> ${escapeHtml(user.id)}</p>
+    <p><strong>Email :</strong> ${escapeHtml(user.email || "N/A")}</p>
+    <p><strong>Plan :</strong> ${escapeHtml((user.plan || "free").toUpperCase())}</p>
+    <p><strong>Usage IA :</strong> ${Number(user.usage) || 0}</p>
+    <p><strong>Créé le :</strong> ${escapeHtml(created)}</p>
+    ${user.upgradedAt ? `<p><strong>Passé Pro le :</strong> ${escapeHtml(new Date(user.upgradedAt).toLocaleString("fr-FR"))}</p>` : ""}
+  `;
+  document.getElementById("userModal").classList.add("show");
+};
+
+window.closeModal = function() {
+  document.getElementById("userModal").classList.remove("show");
+};
+
+document.getElementById("userModal").addEventListener("click", function(event) {
+  if (event.target === this) closeModal();
+});
+</script>
+</body>
+</html>

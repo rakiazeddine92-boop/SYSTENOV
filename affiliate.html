@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programme d'affiliation - SYSTENOV</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .affiliate-hero {
+      text-align: center;
+      padding: 50px 20px 60px;
+    }
+    .affiliate-hero .icon-big {
+      font-size: 4rem;
+      color: #fbbf24;
+      margin-bottom: 16px;
+    }
+    .affiliate-hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f1f5f9, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .affiliate-hero p {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      max-width: 600px;
+      margin: 16px auto 28px;
+      line-height: 1.7;
+    }
+    .btn-join {
+      display: inline-block;
+      padding: 14px 40px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      background: #fbbf24;
+      color: #0a0f1e;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    .btn-join:hover {
+      transform: scale(1.02);
+      filter: brightness(1.05);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto 40px;
+    }
+    .stat-card-aff {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .stat-card-aff h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fbbf24;
+    }
+    .stat-card-aff p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+    .how-it-works {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .how-it-works .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.02);
+      padding: 16px 20px;
+      border-radius: 12px;
+      border-left: 3px solid #fbbf24;
+    }
+    .how-it-works .step .num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fbbf24;
+      min-width: 40px;
+    }
+    .how-it-works .step p {
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+    .how-it-works .step strong {
+      color: #f1f5f9;
+    }
+    @media (max-width: 600px) {
+      .affiliate-hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <a href="index.html" class="logo-link">
+    <img src="logo.png" alt="SYSTENOV" class="logo-img">
+    <span class="logo-text">SYSTENOV</span>
+  </a>
+
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+    ☰
+  </button>
+
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#pricing">Tarifs</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html" class="btn-nav">Connexion</a>
+    <a href="admin.html" class="admin-link" style="color:#ffd700; font-weight:bold;">Admin</a>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="affiliate-hero">
+  <div class="icon-big"><i class="fas fa-handshake"></i></div>
+  <h1>🤝 Programme d'affiliation</h1>
+  <p>Gagnez <strong>20%</strong> de commission sur chaque vente réalisée via votre lien de parrainage. Rejoignez notre programme et commencez à gagner de l'argent dès aujourd'hui.</p>
+  <a href="dashboard.html" class="btn-join"><i class="fas fa-rocket"></i> Rejoindre maintenant</a>
+</section>
+
+<!-- ===== STATS ===== -->
+<div style="padding: 20px 0;">
+  <div class="stats-grid">
+    <div class="stat-card-aff">
+      <h3>20%</h3>
+      <p>Commission par vente</p>
+    </div>
+    <div class="stat-card-aff">
+      <h3>$9</h3>
+      <p>Commission par Pro ($9)</p>
+    </div>
+    <div class="stat-card-aff">
+      <h3>∞</h3>
+      <p>Nombre de partenaires</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section style="padding: 20px 0 50px;">
+  <h2 style="text-align:center; font-size:1.8rem; font-weight:700; margin-bottom:30px;">Comment ça marche ?</h2>
+  <div class="how-it-works">
+    <div class="step">
+      <span class="num">1</span>
+      <p><strong>Inscrivez-vous</strong> au programme d'affiliation depuis votre Dashboard.</p>
+    </div>
+    <div class="step">
+      <span class="num">2</span>
+      <p><strong>Partagez votre lien</strong> unique avec vos contacts, sur les réseaux sociaux ou votre site web.</p>
+    </div>
+    <div class="step">
+      <span class="num">3</span>
+      <p><strong>Gagnez 20%</strong> sur chaque vente réalisée via votre lien. Les commissions sont créditées automatiquement.</p>
+    </div>
+    <div class="step">
+      <span class="num">4</span>
+      <p><strong>Suivez vos gains</strong> en temps réel depuis votre Dashboard et retirez vos commissions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2026 SYSTENOV – Tous droits réservés</p>
+  <div style="margin-top:8px; display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    <a href="privacy.html">Politique de confidentialité</a>
+    <a href="terms.html">Conditions d'utilisation</a>
+    <a href="contact.html">Contact</a>
+    <a href="https://wa.me/212665998835" target="_blank" style="color:#25D366;">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
